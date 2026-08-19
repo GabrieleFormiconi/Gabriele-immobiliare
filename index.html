@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gabriele Formiconi — Valorizzazione Immobiliare, Roma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#171410;
+    --ink-soft:#231f19;
+    --ivory:#f6f1e6;
+    --ivory-dim:#ede6d5;
+    --brass:#b28c56;
+    --brass-light:#d7bd8d;
+    --wine:#5c2323;
+    --stone:#8a8272;
+    --line-dark: rgba(246,241,230,0.14);
+    --line-light: rgba(23,20,16,0.14);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--ivory);
+    font-family:'Inter', sans-serif;
+    font-size:16px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    line-height:1.08;
+    letter-spacing:-0.01em;
+  }
+  em{ font-style:italic; font-weight:400; color:var(--brass-light); }
+  a{ color:inherit; }
+  img{ max-width:100%; display:block; }
+  .wrap{ max-width:1140px; margin:0 auto; padding:0 32px; }
+  @media (max-width:640px){ .wrap{ padding:0 22px; } }
+
+  .rule{ height:1px; background:var(--line-dark); border:none; }
+  .rule.light{ background:var(--line-light); }
+
+  /* NAV */
+  header.nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(23,20,16,0.9);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line-dark);
+  }
+  .navbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px 32px; max-width:1140px; margin:0 auto;
+  }
+  .brand{
+    font-family:'Fraunces', serif; font-weight:500;
+    font-size:19px; letter-spacing:0.01em;
+  }
+  .brand .dot{ color:var(--brass-light); }
+  nav.links{ display:flex; gap:34px; font-size:13.5px; letter-spacing:0.03em; }
+  nav.links a{ text-decoration:none; opacity:0.75; transition:opacity .2s, color .2s; }
+  nav.links a:hover{ opacity:1; color:var(--brass-light); }
+  @media (max-width:760px){ nav.links{ display:none; } }
+
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:14px 28px;
+    font-family:'Inter'; font-weight:500;
+    letter-spacing:0.02em; font-size:14px;
+    border-radius:2px;
+    text-decoration:none;
+    border:1px solid transparent;
+    cursor:pointer;
+    transition:transform .2s ease, background .2s ease, border-color .2s ease, color .2s ease;
+  }
+  .btn:hover{ transform:translateY(-1px); }
+  .btn-primary{ background:var(--brass); color:var(--ink); }
+  .btn-primary:hover{ background:var(--brass-light); }
+  .btn-outline{ border-color:rgba(246,241,230,0.4); color:var(--ivory); }
+  .btn-outline:hover{ border-color:var(--brass-light); color:var(--brass-light); }
+
+  /* HERO */
+  .hero{
+    position:relative;
+    padding:130px 0 100px;
+    background:
+      radial-gradient(ellipse 60% 50% at 85% 0%, rgba(178,140,86,0.14), transparent 70%),
+      var(--ink);
+  }
+  .eyebrow{
+    font-family:'Fraunces', serif; font-style:italic; font-weight:400;
+    font-size:16px; color:var(--brass-light); margin-bottom:22px;
+    display:flex; align-items:center; gap:12px;
+  }
+  .eyebrow::before{ content:""; width:30px; height:1px; background:var(--brass-light); display:inline-block; }
+  .hero h1{
+    font-size:clamp(36px, 5.6vw, 68px);
+    max-width:820px;
+    color:var(--ivory);
+    font-weight:500;
+  }
+  .hero p.lead{
+    max-width:540px; margin-top:26px;
+    font-size:18px; color:#c9c3b3;
+  }
+  .hero .cta-row{ display:flex; gap:16px; margin-top:42px; flex-wrap:wrap; }
+
+  .kpi-row{
+    display:flex; gap:0; margin-top:70px; flex-wrap:wrap;
+    border-top:1px solid var(--line-dark);
+  }
+  .kpi{
+    flex:1 1 180px; padding:24px 24px 0 0;
+  }
+  .kpi .num{ font-family:'Fraunces'; font-size:30px; font-weight:500; color:var(--brass-light); }
+  .kpi .lbl{ font-size:12.5px; letter-spacing:0.03em; color:var(--stone); margin-top:6px; }
+
+  section{ padding:100px 0; }
+  .sec-title{ font-size:clamp(28px,3.6vw,42px); max-width:680px; font-weight:500; }
+  .sec-sub{ color:#b9b2a0; max-width:600px; margin-top:18px; font-size:16px; }
+
+  /* SERVICES */
+  .services-grid{
+    margin-top:60px;
+    display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+    background:var(--line-dark);
+    border:1px solid var(--line-dark);
+  }
+  @media (max-width:900px){ .services-grid{ grid-template-columns:1fr; } }
+  .service-card{
+    background:var(--ink); padding:40px 36px;
+  }
+  .service-card .num-label{
+    font-family:'Fraunces'; font-style:italic; font-size:14px; color:var(--brass);
+    margin-bottom:16px; display:block;
+  }
+  .service-card h3{ font-size:24px; margin-bottom:14px; color:var(--ivory); font-weight:500; }
+  .service-card p{ color:#b9b2a0; font-size:15px; }
+  .service-card .foot{ margin-top:22px; font-size:13.5px; }
+  .service-card .foot a{ color:var(--brass-light); text-decoration:none; border-bottom:1px solid rgba(215,189,141,0.4); padding-bottom:1px; }
+  .service-card .foot a:hover{ border-color:var(--brass-light); }
+
+  /* PROCESS — roman numerals, understated */
+  .process{ margin-top:80px; }
+  .steps{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:32px; margin-top:40px;
+  }
+  @media (max-width:860px){ .steps{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:520px){ .steps{ grid-template-columns:1fr; } }
+  .step{ border-top:1px solid var(--brass); padding-top:18px; }
+  .step .n{ font-family:'Fraunces'; font-style:italic; font-size:26px; color:var(--brass-light); }
+  .step h4{ font-family:'Fraunces'; font-weight:500; font-size:17px; margin-top:8px; }
+  .step p{ font-size:14px; color:#a89f8c; margin-top:10px; }
+
+  /* CASE STUDIES */
+  .paper-section{ background:var(--ivory); color:var(--ink); }
+  .paper-section .eyebrow{ color:var(--wine); }
+  .paper-section .eyebrow::before{ background:var(--wine); }
+  .paper-section .sec-sub{ color:#5a5344; }
+
+  .case{
+    margin-top:64px;
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:52px; align-items:start;
+    padding-bottom:64px; border-bottom:1px solid var(--line-light);
+  }
+  .case:last-child{ border-bottom:none; padding-bottom:0; }
+  @media (max-width:860px){ .case{ grid-template-columns:1fr; } }
+
+  .slider-wrap{
+    position:relative; width:100%; aspect-ratio:4/3;
+    border:1px solid rgba(23,20,16,0.15);
+    overflow:hidden; user-select:none;
+  }
+  .slider-wrap .layer{
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    flex-direction:column; gap:8px;
+    font-family:'Inter'; font-size:13px; text-align:center; padding:20px;
+  }
+  .slider-wrap .before{
+    background:#e4dcc7;
+    color:#7a7260;
+  }
+  .slider-wrap .after{
+    background:linear-gradient(160deg,#241f18,#3a2f22);
+    color:#f6f1e6;
+    clip-path:inset(0 0 0 50%);
+  }
+  .slider-wrap .badge{
+    font-family:'Fraunces'; font-style:italic; font-size:14px;
+    padding:2px 0; border-bottom:1px solid currentColor;
+  }
+  .slider-handle{
+    position:absolute; top:0; bottom:0; left:50%;
+    width:1px; background:var(--brass);
+    cursor:ew-resize;
+    transform:translateX(-50%);
+  }
+  .slider-handle::after{
+    content:""; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:36px; height:36px; background:var(--ivory); border:1px solid var(--brass);
+    border-radius:50%;
+    background-image:linear-gradient(90deg, transparent 46%, var(--brass) 46%, var(--brass) 54%, transparent 54%);
+  }
+  .slider-range{
+    position:absolute; inset:0; width:100%; height:100%;
+    opacity:0; cursor:ew-resize; margin:0;
+  }
+
+  .case-info .case-label{ font-family:'Fraunces'; font-style:italic; font-size:15px; color:var(--wine); margin-bottom:4px; }
+  .case-info h3{ font-size:23px; margin-bottom:6px; font-weight:500; }
+  .case-info .loc{ font-size:13px; color:#8a8272; letter-spacing:0.02em; margin-bottom:20px; }
+  .cost-table{ width:100%; border-collapse:collapse; margin-top:20px; font-size:14.5px; }
+  .cost-table tr{ border-bottom:1px solid rgba(23,20,16,0.12); }
+  .cost-table td{ padding:11px 4px; }
+  .cost-table td:last-child{ text-align:right; font-variant-numeric:tabular-nums; }
+  .cost-table tr.total td{ border-top:1px solid var(--ink); border-bottom:none; padding-top:14px; font-weight:600; font-size:16px; font-family:'Fraunces'; }
+  .placeholder-note{
+    margin-top:18px; font-size:13px; color:#8a8272; font-style:italic;
+  }
+  .roi-row{
+    display:flex; gap:1px; margin-top:22px;
+    background:rgba(23,20,16,0.12);
+    border:1px solid rgba(23,20,16,0.12);
+  }
+  .roi-box{
+    flex:1; background:var(--ivory); padding:18px 20px;
+  }
+  .roi-label{
+    font-size:12px; letter-spacing:0.03em; color:#8a8272; margin-bottom:6px;
+  }
+  .roi-value{
+    font-family:'Fraunces'; font-weight:500; font-size:24px; color:var(--wine);
+  }
+  .room-tabs{
+    display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;
+  }
+  .room-tab{
+    font-family:'Inter'; font-size:12.5px; letter-spacing:0.02em;
+    padding:7px 14px; border:1px solid rgba(23,20,16,0.25);
+    background:transparent; color:var(--ink);
+    cursor:pointer; border-radius:2px;
+    transition:background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .room-tab:hover{ border-color:var(--wine); }
+  .room-tab.active{
+    background:var(--wine); border-color:var(--wine); color:var(--ivory);
+  }
+
+  /* HOSTFLOW */
+  .hostflow-section{ background:var(--ink-soft); position:relative; overflow:hidden; }
+  .hostflow-inner{ display:flex; gap:60px; align-items:center; flex-wrap:wrap; }
+  .hostflow-copy{ flex:1 1 420px; }
+  .hostflow-copy .sec-title{ color:var(--ivory); }
+  .hostflow-copy p{ color:#c2bba8; margin-top:20px; max-width:480px; }
+  .hostflow-mock{
+    flex:1 1 340px; min-width:280px;
+    background:var(--ink); border-radius:6px; padding:26px;
+    box-shadow:0 30px 70px rgba(0,0,0,0.4);
+    border:1px solid var(--line-dark);
+  }
+  .hostflow-mock .top{ display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
+  .hostflow-mock .top .name{ font-family:'Fraunces'; font-style:italic; font-size:15px; color:var(--brass-light); }
+  .hostflow-mock .row{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:14px 0; border-bottom:1px solid var(--line-dark);
+    font-size:14px; color:#d6d0c1;
+  }
+  .hostflow-mock .row .pill{
+    background:rgba(178,140,86,0.18); color:var(--brass-light); padding:3px 10px; border-radius:20px; font-size:11.5px; border:1px solid rgba(178,140,86,0.3);
+  }
+  .price-tag{ margin-top:28px; display:flex; align-items:baseline; gap:10px; }
+  .price-tag .amt{ font-family:'Fraunces'; font-size:42px; color:var(--brass-light); font-weight:500; }
+  .price-tag .per{ font-size:13.5px; color:#a89f8c; }
+
+  /* EXTRA SERVICE */
+  .extra{ border-left:1px solid var(--brass); padding:8px 0 8px 40px; margin-top:60px; }
+  .extra .num-label{ font-family:'Fraunces'; font-style:italic; font-size:14px; color:var(--brass); display:block; margin-bottom:14px; }
+  .extra h3{ font-size:27px; max-width:520px; font-weight:500; }
+  .extra p{ color:#b9b2a0; margin-top:16px; max-width:600px; }
+
+  /* CONTACT */
+  .contact{ background:var(--ink); border-top:1px solid var(--line-dark); }
+  .contact-grid{ display:grid; grid-template-columns:1.2fr 0.8fr; gap:52px; }
+  @media (max-width:760px){ .contact-grid{ grid-template-columns:1fr; } }
+  .contact h2{ font-size:clamp(30px,4vw,46px); font-weight:500; }
+  .contact-list{ margin-top:32px; }
+  .contact-list .row{
+    display:flex; justify-content:space-between; padding:18px 0;
+    border-bottom:1px solid var(--line-dark); font-size:15px;
+  }
+  .contact-list .row span:first-child{ color:var(--stone); letter-spacing:0.03em; font-size:13px; }
+  .contact-list .row a{ text-decoration:none; color:var(--ivory); }
+  .contact-list .row a:hover{ color:var(--brass-light); }
+
+  footer{ padding:36px 0; text-align:center; font-size:13px; color:var(--stone); border-top:1px solid var(--line-dark); }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .btn:hover{ transform:none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     MODIFICA QUI SOTTO — non serve toccare il resto del file.
+     Per ogni progetto: titolo, descrizione, costi e le foto delle
+     varie stanze (prima/dopo). Per le foto, incolla un link diretto
+     all'immagine (es. caricata su imgur.com), oppure lascia il campo
+     vuoto finché non hai la foto — comparirà come segnaposto.
+     Puoi aggiungere o togliere stanze copiando/rimuovendo una riga
+     dentro "rooms: [...]", e aggiungere altri progetti copiando un
+     blocco { ... } e aggiungendo una virgola.
+     ============================================================ -->
+<script>
+const PROJECTS = [
+  {
+    label: "Progetto 01",
+    title: "Via Andrea Mantegna 9, Fiumicino (RM)",
+    meta: "68 mq · 60 giorni di intervento",
+    description: "Un appartamento datato, con pareti fucsia e arancioni, mobili in stile classico e infissi ormai vecchi, ma con una pianta luminosa e un balcone di 17 mq affacciato sul verde: un immobile individuato per il suo potenziale di valorizzazione e ripensato attraverso un intervento mirato sugli spazi, sulle finiture e sul posizionamento finale.",
+    rooms: [
+      { name: "Soggiorno",       beforeImg: "https://i.imgur.com/DdSZNni.jpeg", afterImg: "https://i.imgur.com/dlopBdZ.jpeg" },
+      { name: "Camera da letto", beforeImg: "https://i.imgur.com/mqYtkvJ.jpeg", afterImg: "https://i.imgur.com/LyM8lNk.jpeg" },
+      { name: "Bagno",           beforeImg: "https://i.imgur.com/LovuzXX.jpeg", afterImg: "https://i.imgur.com/ocemnOL.png" },
+      { name: "Cucina",          beforeImg: "https://i.imgur.com/Xx3il5K.jpeg", afterImg: "https://i.imgur.com/8wkXyTG.png" },
+      { name: "Balcone",         beforeImg: "https://i.imgur.com/yc1lD0N.png", afterImg: "https://i.imgur.com/MYDzBKQ.jpeg" }
+    ],
+    costs: {
+      acquisto: "145.000",
+      ristrutturazione: "6.000",
+      altriCosti: "8.800",
+      valoreFinale: "200.000",
+      roi: "25,2%",
+      incassoNetto: "40.200"
+    }
+  },
+  {
+    label: "Progetto 02",
+    title: "Via sandro Botticelli, Fiumicino (RM)",
+    meta: "63 mq · 30 giorni di intervento",
+    description: "Un immobile individuato per il suo potenziale di valorizzazione e ripensato attraverso un intervento mirato sugli spazi, sulle finiture e sul posizionamento finale.",
+    rooms: [
+      { name: "Soggiorno",      beforeImg: "", afterImg: "" },
+      { name: "Camera da letto", beforeImg: "", afterImg: "" },
+      { name: "Bagno",           beforeImg: "", afterImg: "" },
+      { name: "Cucina",          beforeImg: "", afterImg: "" }
+      
+    ],
+    costs: {
+      acquisto: "164.000",
+      ristrutturazione: "7.000",
+      altriCosti: "10.300",
+      valoreFinale: "210.000",
+      roi: "15,83%",
+      incassoNetto: "28.700"
+    }
+  }
+];
+</script>
+<!-- ============================================================
+     FINE BLOCCO DA MODIFICARE
+     ============================================================ -->
+
+<header class="nav">
+  <div class="navbar">
+    <div class="brand">Gabriele Formiconi<span class="dot"> </span></div>
+    <nav class="links">
+      <a href="#progetti">Progetti</a>
+      <a href="#servizi">Servizi</a>
+      <a href="#metodo">Metodo</a>
+      <a href="#hostflow">HostFlow</a>
+      <a href="#contatti">Contatti</a>
+    </nav>
+    <a href="#contatti" class="btn btn-primary" style="padding:11px 22px;font-size:13px;">Scrivimi</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Immobiliare · Roma</div>
+    <h1>Valorizzazione immobiliare, <em>dalla strategia al risultato.</em></h1>
+    <p class="lead">Seguo progetti immobiliari a Roma dalla valutazione dell'opportunità alla trasformazione e valorizzazione finale dell'immobile.</p>
+    <div class="cta-row">
+      <a href="#progetti" class="btn btn-primary">Scopri i progetti</a>
+      <a href="#contatti" class="btn btn-outline">Parliamo del tuo immobile</a>
+    </div>
+
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="num">2</div>
+        <div class="lbl">Progetti realizzati</div>
+      </div>
+      <div class="kpi">
+        <div class="num">Roma</div>
+        <div class="lbl">Area operativa</div>
+      </div>
+      <div class="kpi">
+        <div class="num">End-to-end</div>
+        <div class="lbl">Gestione del progetto</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- PROGETTI / CASE STUDIES -->
+<section id="progetti" class="paper-section">
+  <div class="wrap">
+    <div class="eyebrow">Case study</div>
+    <h2 class="sec-title">Progetti reali. Risultati misurabili.</h2>
+    <p class="sec-sub">Una selezione di operazioni immobiliari seguite direttamente, dalla situazione iniziale alla valorizzazione finale. Trascina il cerchio al centro dell'immagine per confrontare prima e dopo.</p>
+
+    <div id="projects-container"></div>
+  </div>
+</section>
+
+<!-- SERVIZI -->
+<section id="servizi">
+  <div class="wrap">
+    <div class="eyebrow">Cosa posso fare per te</div>
+    <h2 class="sec-title">Soluzioni pensate per proprietari e investitori.</h2>
+    <p class="sec-sub">Dalla ricerca dell'opportunità alla gestione dell'immobile, ogni servizio nasce dall'esperienza diretta sul mercato e da un approccio basato su analisi, controllo dei costi e valorizzazione.</p>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <span class="num-label">01 — Valorizzazione immobiliare</span>
+        <h3>Acquisto, ristrutturazione e valorizzazione</h3>
+        <p>Analisi dell'opportunità, definizione dell'intervento e coordinamento della ristrutturazione, con un obiettivo preciso: aumentare il valore dell'immobile e riposizionarlo sul mercato.</p>
+        <div class="foot"><a href="#metodo">Scopri come lavoro →</a></div>
+      </div>
+
+      <div class="service-card">
+        <span class="num-label">02 — Gestione affitti brevi</span>
+        <h3>Trasforma il tuo immobile in una fonte di reddito</h3>
+        <p>Gestione operativa dell'immobile, dagli annunci alle prenotazioni fino al coordinamento di check-in, pulizie e attività quotidiane su Airbnb e Booking.</p>
+        <div class="foot"><a href="#contatti">Richiedi una valutazione →</a></div>
+      </div>
+
+      <div class="service-card">
+        <span class="num-label">03 — Scouting immobiliare</span>
+        <h3>Ricerca e analisi per investitori</h3>
+        <p>Ricerca e analisi preliminare di opportunità immobiliari a Roma sulla base di prezzo, zona, costi e potenziale di valorizzazione. Le attività di mediazione e compravendita vengono svolte attraverso professionisti immobiliari abilitati.</p>
+        <div class="foot"><a href="#contatti">Scopri il servizio →</a></div>
+      </div>
+    </div>
+
+    <div class="process" id="metodo">
+      <div class="eyebrow">Come lavoro</div>
+      <h2 class="sec-title">Un metodo, quattro fasi.</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="n">I.</div>
+          <h4>Analisi</h4>
+          <p>Immobile, mercato, costi e potenziale.</p>
+        </div>
+        <div class="step">
+          <div class="n">II.</div>
+          <h4>Strategia</h4>
+          <p>Budget, intervento e obiettivo.</p>
+        </div>
+        <div class="step">
+          <div class="n">III.</div>
+          <h4>Esecuzione</h4>
+          <p>Coordinamento del progetto e controllo dei costi.</p>
+        </div>
+        <div class="step">
+          <div class="n">IV.</div>
+          <h4>Valorizzazione</h4>
+          <p>Vendita o messa a reddito dell'immobile.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOSTFLOW -->
+<section id="hostflow" class="hostflow-section">
+  <div class="wrap">
+    <div class="hostflow-inner">
+      <div class="hostflow-copy">
+        <div class="eyebrow">Property Management Technology</div>
+        <h2 class="sec-title">La tecnologia dietro la gestione.</h2>
+        <p>Dall'esperienza nella gestione degli affitti brevi nasce HostFlow, una piattaforma sviluppata per centralizzare prenotazioni, calendari e attività operative in un unico spazio.</p>
+        <div class="cta-row" style="margin-top:30px;">
+          <a href="#contatti" class="btn btn-primary">Scopri HostFlow</a>
+        </div>
+      </div>
+      <div class="hostflow-mock">
+        <div class="top"><span class="name">HostFlow</span><span style="font-size:11.5px;color:#a89f8c;">Pannello host</span></div>
+        <div class="row"><span>Appartamento Trastevere</span><span class="pill">Occupato</span></div>
+        <div class="row"><span>Check-in oggi — ospite Marco R.</span><span class="pill">Confermato</span></div>
+        <div class="row"><span>Pulizie in programma</span><span class="pill">3 attive</span></div>
+        <div class="row"><span>Calendari collegati</span><span class="pill">Airbnb + Booking</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATTI -->
+<section id="contatti" class="contact">
+  <div class="wrap contact-grid">
+    <div>
+      <div class="eyebrow">Iniziamo da un progetto</div>
+      <h2>Hai un immobile con del potenziale?</h2>
+      <p class="sec-sub" style="color:#b9b2a0;">Analizziamo insieme l'immobile, gli obiettivi e le possibili strategie di valorizzazione.</p>
+    </div>
+    <div class="contact-list">
+      <div class="row"><span>Email</span><a href="mailto:gabrieleformiconi11@gmail.com">gabrieleformiconi11@gmail.com</a></div>
+      <div class="row"><span>Telefono</span><a href="tel:+393923878247">+39 392 387 8247</a></div>
+      <div class="row"><span>Area</span><span>Roma e provincia</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Gabriele Formiconi
+</footer>
+
+<script>
+  function setupSlider(rangeId, handleId, afterId){
+    const range = document.getElementById(rangeId);
+    const handle = document.getElementById(handleId);
+    const after = document.getElementById(afterId);
+    function update(){
+      const v = range.value;
+      after.style.clipPath = `inset(0 0 0 ${v}%)`;
+      handle.style.left = v + '%';
+    }
+    range.addEventListener('input', update);
+    update();
+  }
+
+  function escapeHtml(str){
+    const d = document.createElement('div');
+    d.textContent = str == null ? '' : String(str);
+    return d.innerHTML;
+  }
+
+  function roomLayerContent(img, phase, roomName, projectTitle){
+    return img
+      ? `<img src="${escapeHtml(img)}" alt="${phase} — ${escapeHtml(roomName)} — ${escapeHtml(projectTitle)}" style="width:100%;height:100%;object-fit:cover;">`
+      : `<span class="badge">${phase}</span><span>${escapeHtml(roomName)} — foto da aggiungere</span>`;
+  }
+
+  function setActiveRoom(projIndex, roomIndex){
+    const n = projIndex + 1;
+    const room = PROJECTS[projIndex].rooms[roomIndex];
+    const beforeLayer = document.querySelector(`#slider${n} .layer.before`);
+    const afterLayer = document.getElementById(`after${n}`);
+    beforeLayer.innerHTML = roomLayerContent(room.beforeImg, 'Prima', room.name, PROJECTS[projIndex].title);
+    afterLayer.innerHTML = roomLayerContent(room.afterImg, 'Dopo', room.name, PROJECTS[projIndex].title);
+    const range = document.getElementById(`range${n}`);
+    range.value = 50;
+    afterLayer.style.clipPath = 'inset(0 0 0 50%)';
+    const handle = document.getElementById(`handle${n}`);
+    handle.style.left = '50%';
+
+    document.querySelectorAll(`.room-tabs[data-project="${projIndex}"] .room-tab`).forEach((tab, ti) => {
+      tab.classList.toggle('active', ti === roomIndex);
+    });
+  }
+
+  function renderProjects(){
+    const container = document.getElementById('projects-container');
+    if(!container) return;
+    container.innerHTML = PROJECTS.map((p, i) => {
+      const n = i + 1;
+      const firstRoom = p.rooms[0];
+      const beforeContent = roomLayerContent(firstRoom.beforeImg, 'Prima', firstRoom.name, p.title);
+      const afterContent = roomLayerContent(firstRoom.afterImg, 'Dopo', firstRoom.name, p.title);
+      const tabs = p.rooms.map((r, ri) =>
+        `<button type="button" class="room-tab${ri === 0 ? ' active' : ''}" data-project="${i}" data-room="${ri}">${escapeHtml(r.name)}</button>`
+      ).join('');
+
+      return `
+      <div class="case">
+        <div>
+          <div class="room-tabs" data-project="${i}">${tabs}</div>
+          <div class="slider-wrap" id="slider${n}">
+            <div class="layer before">${beforeContent}</div>
+            <div class="layer after" id="after${n}">${afterContent}</div>
+            <div class="slider-handle" id="handle${n}"></div>
+            <input type="range" class="slider-range" id="range${n}" min="0" max="100" value="50" aria-label="Confronta prima e dopo, ${escapeHtml(p.label)}">
+          </div>
+        </div>
+        <div class="case-info">
+          <div class="case-label">${escapeHtml(p.label)}</div>
+          <h3>${escapeHtml(p.title)}</h3>
+          <div class="loc">${escapeHtml(p.meta)}</div>
+          <p>${escapeHtml(p.description)}</p>
+          <table class="cost-table">
+            <tr><td>Investimento immobiliare</td><td>€ ${escapeHtml(p.costs.acquisto)}</td></tr>
+            <tr><td>Intervento di ristrutturazione</td><td>€ ${escapeHtml(p.costs.ristrutturazione)}</td></tr>
+            <tr><td>Costi dell'operazione</td><td>€ ${escapeHtml(p.costs.altriCosti)}</td></tr>
+            <tr class="total"><td>Valore finale / Prezzo di vendita</td><td>€ ${escapeHtml(p.costs.valoreFinale)}</td></tr>
+          </table>
+          <div class="roi-row">
+            <div class="roi-box">
+              <div class="roi-label">ROI dell'operazione</div>
+              <div class="roi-value">${escapeHtml(p.costs.roi)}</div>
+            </div>
+            <div class="roi-box">
+              <div class="roi-label">Incasso netto</div>
+              <div class="roi-value">€ ${escapeHtml(p.costs.incassoNetto)}</div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+
+    PROJECTS.forEach((p, i) => setupSlider(`range${i+1}`, `handle${i+1}`, `after${i+1}`));
+
+    container.querySelectorAll('.room-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        setActiveRoom(parseInt(tab.dataset.project, 10), parseInt(tab.dataset.room, 10));
+      });
+    });
+  }
+
+  renderProjects();
+</script>
+
+</body>
+</html>
