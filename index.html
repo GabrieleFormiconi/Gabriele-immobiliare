@@ -215,9 +215,14 @@ section{position:relative}
 /* ---------- dettaglio progetto ---------- */
 .modal{position:fixed;inset:0;z-index:300;background:#fff;overflow-y:auto;clip-path:inset(100% 0 0 0);transition:clip-path 1s var(--ease);visibility:hidden}
 .modal.open{clip-path:inset(0 0 0 0);visibility:visible}
-.modal .close{position:fixed;top:32px;right:4vw;z-index:5;width:60px;height:60px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:22px;cursor:pointer;transition:.4s var(--ease)}
+.mbar{position:sticky;top:0;z-index:5;background:rgba(250,250,248,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.mbar .wrap{display:flex;align-items:center;justify-content:space-between;height:76px}
+.mbar .back{background:none;border:0;font:500 12px var(--sans);letter-spacing:.24em;text-transform:uppercase;cursor:pointer;padding:12px 0;color:var(--ink)}
+.mbar .back:hover{text-decoration:underline}
+.mlogo{width:44px;height:44px;border:1px solid var(--ink);display:grid;place-items:center;font-family:var(--serif);font-size:16px}
+.modal .close{position:static;width:48px;height:48px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:22px;cursor:pointer;transition:.4s var(--ease)}
 .modal .close:hover{background:var(--black);color:#fff;transform:rotate(90deg)}
-.modal .inner{padding:120px 0 120px}
+.modal .inner{padding:48px 0 120px}
 .modal .project{margin-top:0}
 .modal .pj-info>*{opacity:0;transform:translateY(30px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
 .modal.open .pj-info>*{opacity:1;transform:none}
@@ -381,7 +386,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
   .pd-price{text-align:left}
   .pf-grid{grid-template-columns:1fr;margin-top:60px}
   .card .txt{left:24px;right:24px;bottom:24px}
-  .modal .close{top:20px;right:20px;width:50px;height:50px}
+  .mbar .wrap{height:64px}.mlogo{display:none}.modal .close{width:44px;height:44px}
   .c-wrap{grid-template-columns:1fr;gap:56px}
   .cform .row{grid-template-columns:1fr;gap:0}
   .c-grid a+a,.c-grid a+div{padding-left:0;border-left:0;border-top:1px solid var(--line-dark)}
@@ -588,7 +593,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
   </div>
   <div class="marquee"><div>Analisi · Strategia · Esecuzione · Valorizzazione · Analisi · Strategia · Esecuzione · Valorizzazione ·&nbsp;</div></div>
 </section>
-<div class="modal" id="modal" aria-hidden="true"><button class="close" id="mClose" aria-label="Chiudi">✕</button><div class="wrap inner" id="mBody"></div></div>
+<div class="modal" id="modal" aria-hidden="true"><div class="mbar"><div class="wrap"><button class="back" id="mBack">← Torna ai progetti</button><span class="mlogo">GF</span><button class="close" id="mClose" aria-label="Chiudi">✕</button></div></div><div class="wrap inner" id="mBody"></div></div>
 <div class="lb" id="lb"><button class="x" id="lbX">✕</button><button class="pv" id="lbP">←</button><img id="lbImg" alt=""><button class="nx" id="lbN">→</button><div class="cap" id="lbCap"></div></div>
 <div class="priv" id="priv"><div>
   <h4>Privacy Policy</h4>
@@ -837,6 +842,7 @@ function openProject(i) {
   });
 
   const m = $("#modal"); m.scrollTop = 0; m.classList.add("open"); m.setAttribute("aria-hidden", "false"); document.body.classList.add("lock");
+  if (!history.state || !history.state.progetto) history.pushState({ progetto: i }, "", "#progetto-" + (i + 1));
 }
 
 /* lightbox */
@@ -853,9 +859,13 @@ addEventListener("keydown", e => {
   if (e.key === "ArrowRight") $("#lbN").click();
   if (e.key === "ArrowLeft") $("#lbP").click();
 });
-function closeProject() { const m = $("#modal"); m.classList.remove("open"); m.setAttribute("aria-hidden", "true"); document.body.classList.remove("lock"); }
+function hideProject() { const m = $("#modal"); m.classList.remove("open"); m.setAttribute("aria-hidden", "true"); document.body.classList.remove("lock"); }
+function closeProject() { if (!$("#modal").classList.contains("open")) return; if (history.state && history.state.progetto !== undefined) history.back(); else hideProject(); }
+addEventListener("popstate", () => { if (history.state && history.state.progetto !== undefined) openProject(history.state.progetto); else { hideProject(); closeLb(); } });
 $$(".card[data-i]").forEach(c => c.onclick = () => openProject(+c.dataset.i));
 $("#mClose").onclick = closeProject;
+$("#mBack").onclick = closeProject;
+if (location.hash.startsWith("#progetto-")) history.replaceState(null, "", location.pathname);
 addEventListener("keydown", e => { if (e.key !== "Escape") return; if ($("#lb").classList.contains("open")) closeLb(); else closeProject(); });
 
 /* servizi apri/chiudi */
