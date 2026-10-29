@@ -62,8 +62,9 @@ header.hide{transform:translateY(-100%)}
 header{transition:transform .5s var(--ease),background .5s,color .5s,border-color .5s}
 .nav{display:flex;align-items:center;justify-content:space-between;height:120px;transition:height .5s var(--ease)}
 header.solid .nav{height:96px}
-.logo{width:68px;height:68px;border:1.5px solid currentColor;display:grid;place-items:center;position:relative;font-family:var(--serif);font-size:24px;letter-spacing:.04em}
-.logo small{position:absolute;bottom:-5px;left:50%;transform:translateX(-50%);font-family:var(--sans);font-size:6px;letter-spacing:.2em;padding:0 4px;background:var(--bg-logo,transparent)}
+.logo{width:68px;height:68px;border:1.5px solid currentColor;border-bottom:0;display:grid;place-items:center;position:relative;font-family:var(--serif);font-size:24px;letter-spacing:.04em}
+.logo small{position:absolute;bottom:-4px;left:-1.5px;right:-1.5px;display:flex;align-items:center;gap:5px;font-family:var(--sans);font-size:7px;font-weight:600;letter-spacing:.24em;line-height:1}
+.logo small::before,.logo small::after{content:"";flex:1;height:1.5px;background:currentColor}
 .menu{display:flex;gap:52px;font-size:13px;letter-spacing:.24em;text-transform:uppercase;font-weight:500}
 .menu a{position:relative;padding:6px 0}
 .menu a::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ease)}
@@ -217,8 +218,9 @@ section{position:relative}
 .modal.open{clip-path:inset(0 0 0 0);visibility:visible}
 .mbar{position:sticky;top:0;z-index:5;background:rgba(250,250,248,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .mbar .wrap{display:flex;align-items:center;justify-content:space-between;height:76px}
-.mbar .back{background:none;border:0;font:500 12px var(--sans);letter-spacing:.24em;text-transform:uppercase;cursor:pointer;padding:12px 0;color:var(--ink)}
-.mbar .back:hover{text-decoration:underline}
+.mbar .back{display:inline-flex;align-items:center;gap:14px;background:none;border:0;font:500 12px var(--sans);letter-spacing:.24em;text-transform:uppercase;cursor:pointer;padding:0;color:var(--ink)}
+.mbar .back span{display:grid;place-items:center;width:44px;height:44px;border:1px solid var(--ink);border-radius:50%;font-size:16px;letter-spacing:0;transition:.4s var(--ease)}
+.mbar .back:hover span{background:var(--black);color:#fff;transform:translateX(-4px)}
 .mlogo{width:44px;height:44px;border:1px solid var(--ink);display:grid;place-items:center;font-family:var(--serif);font-size:16px}
 .modal .close{position:static;width:48px;height:48px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:22px;cursor:pointer;transition:.4s var(--ease)}
 .modal .close:hover{background:var(--black);color:#fff;transform:rotate(90deg)}
@@ -593,7 +595,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
   </div>
   <div class="marquee"><div>Analisi · Strategia · Esecuzione · Valorizzazione · Analisi · Strategia · Esecuzione · Valorizzazione ·&nbsp;</div></div>
 </section>
-<div class="modal" id="modal" aria-hidden="true"><div class="mbar"><div class="wrap"><button class="back" id="mBack">← Torna ai progetti</button><span class="mlogo">GF</span><button class="close" id="mClose" aria-label="Chiudi">✕</button></div></div><div class="wrap inner" id="mBody"></div></div>
+<div class="modal" id="modal" aria-hidden="true"><div class="mbar"><div class="wrap"><button class="back" id="mBack"><span>←</span> Torna ai progetti</button><span class="mlogo">GF</span><button class="close" id="mClose" aria-label="Chiudi">✕</button></div></div><div class="wrap inner" id="mBody"></div></div>
 <div class="lb" id="lb"><button class="x" id="lbX">✕</button><button class="pv" id="lbP">←</button><img id="lbImg" alt=""><button class="nx" id="lbN">→</button><div class="cap" id="lbCap"></div></div>
 <div class="priv" id="priv"><div>
   <h4>Privacy Policy</h4>
@@ -842,7 +844,7 @@ function openProject(i) {
   });
 
   const m = $("#modal"); m.scrollTop = 0; m.classList.add("open"); m.setAttribute("aria-hidden", "false"); document.body.classList.add("lock");
-  if (!history.state || !history.state.progetto) history.pushState({ progetto: i }, "", "#progetto-" + (i + 1));
+  if (!history.state || history.state.progetto === undefined) history.pushState({ progetto: i }, "", "#progetto-" + (i + 1));
 }
 
 /* lightbox */
