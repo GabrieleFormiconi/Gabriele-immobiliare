@@ -290,6 +290,12 @@ body.lock{overflow:hidden}
 .invest p{max-width:54ch;margin:0 auto;font-size:clamp(16px,1.2vw,19px);line-height:1.8;color:var(--grey);font-weight:300}
 .invest .actions{display:flex;justify-content:center;align-items:center;gap:40px;flex-wrap:wrap;margin-top:44px}
 .invest .link-line{padding:0 0 14px;border-bottom-color:var(--line)}
+.guar{display:grid;grid-template-columns:repeat(3,1fr);max-width:980px;margin:52px auto 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.guar>div{padding:34px 28px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.guar>div+div{border-left:1px solid var(--line)}
+.guar span{width:52px;height:52px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;margin-bottom:6px;background:#fff}
+.guar b{font-family:var(--serif);font-weight:400;font-size:22px}
+.guar small{font-size:14px;line-height:1.6;color:var(--grey);max-width:26ch}
 
 /* ---------- processo ---------- */
 .process{background:var(--black);color:#fff}
@@ -399,6 +405,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
   .pd-body{grid-template-columns:1fr}.side{position:static}
   .pd-price{text-align:left}
   .pf-grid{grid-template-columns:1fr;margin-top:60px}
+  .guar{grid-template-columns:1fr}.guar>div+div{border-left:0;border-top:1px solid var(--line)}
   .card .txt{left:24px;right:24px;bottom:24px}
   .mbar .wrap{height:64px}.mlogo{display:none}.modal .close{width:44px;height:44px}
   .c-wrap{grid-template-columns:1fr;gap:56px}
@@ -464,9 +471,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
       <p class="lead rv rv-d2">Seguo ogni operazione in prima persona: analisi del mercato, definizione del budget, coordinamento della ristrutturazione e posizionamento finale. Ogni scelta è guidata dai numeri, con un unico obiettivo: aumentare il valore dell'immobile.</p>
       <a href="#metodo" class="link-line rv rv-d3">Scopri il metodo <span>→</span></a>
       <div class="stats">
-        <div class="stat rv"><b id="stProj">0</b><span>Operazioni concluse</span></div>
-        <div class="stat rv rv-d1"><b id="stBuy">0</b><span>Immobili acquistati</span></div>
-        <div class="stat rv rv-d2"><b id="stRoi">0</b><span>Immobili venduti</span></div>
+        <div class="stat rv"><b id="stProj">0</b><span>Immobili venduti</span></div>
+        <div class="stat rv rv-d1"><b id="stBuy">0</b><span>Aumento medio di valore</span></div>
+        <div class="stat rv rv-d2"><b id="stRoi">0</b><span>Di lavori in media</span></div>
       </div>
     </div>
     <div class="about-media">
@@ -531,6 +538,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
     <div class="eyebrow rv">Investi con me</div>
     <h2 class="h-xl rv rv-d1">Il tuo primo flipping,<br><em>fatto bene.</em></h2>
     <p class="rv rv-d2">Vuoi investire nel mattone ma non sai da dove partire? Ti affianco in ogni fase, dalla scelta dell'immobile alla vendita, con lo stesso metodo che uso per le mie operazioni.</p>
+    <div class="guar rv rv-d3">
+      <div><span><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 18V8l7-5 7 5v10M8 18v-5h4v5"/></svg></span><b>Compri a tuo nome</b><small>L'immobile è intestato a te, dal rogito alla vendita.</small></div>
+      <div><span><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="2" y="5" width="16" height="11" rx="1"/><path d="M2 9h16M6 13h3"/></svg></span><b>I soldi non passano da me</b><small>Paghi direttamente venditore, impresa e professionisti.</small></div>
+      <div><span><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M10 2l6 3v5c0 4-3 7-6 8-3-1-6-4-6-8V5z"/><path d="M7 10l2 2 4-4"/></svg></span><b>Professionisti abilitati</b><small>Notaio, tecnico e impresa qualificati in ogni fase.</small></div>
+    </div>
     <div class="actions rv rv-d3">
       <a href="#contatti" class="btn btn-dark" data-ogg="Voglio fare un'operazione di flipping">Voglio investire <span>→</span></a>
       <a href="#metodo" class="link-line">Scopri il metodo <span>→</span></a>
@@ -779,11 +791,13 @@ const P = CONFIG.progetti.map(p => {
 const done = P.filter(p => p.ok);
 const valGen = done.reduce((s, p) => s + p.gen, 0);
 const roiMed = done.length ? done.reduce((s, p) => s + p.roi, 0) / done.length : 0;
-Object.assign($("#stProj").dataset, { count: P.length });
-const venduto = done.reduce((s, p) => s + p.vendita, 0);
-const acquistato = P.reduce((s, p) => s + p.acquisto, 0);
-Object.assign($("#stBuy").dataset, { count: acquistato, prefix: "€ " });
-Object.assign($("#stRoi").dataset, { count: venduto, prefix: "€ " });
+// numeri di risultato (calcolati dai progetti venduti)
+const sold = P.filter(p => typeof p.vendita === "number");
+const totAcq = sold.reduce((s, p) => s + p.acquisto, 0), totVen = sold.reduce((s, p) => s + p.vendita, 0);
+const withDays = P.filter(p => typeof p.giorni === "number");
+Object.assign($("#stProj").dataset, { count: sold.length, suffix: " su " + P.length });
+Object.assign($("#stBuy").dataset, { count: totAcq ? Math.round((totVen / totAcq - 1) * 100) : 0, prefix: "+", suffix: "%" });
+Object.assign($("#stRoi").dataset, { count: withDays.length ? Math.round(withDays.reduce((s, p) => s + p.giorni, 0) / withDays.length) : 0, suffix: " giorni" });
 
 /* progetti: card */
 const imgOrPh = (src, label) => `<img src="${src}" alt="${label}" onerror="this.outerHTML='<div class=ph-img>${label ? label + " — foto da aggiungere" : ""}</div>'">`;
