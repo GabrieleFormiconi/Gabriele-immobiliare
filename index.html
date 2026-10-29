@@ -279,6 +279,16 @@ body.lock{overflow:hidden}
 .lb button:hover{background:#fff;color:#000}
 .lb .x{top:28px;right:28px}.lb .pv{left:3vw;top:50%;transform:translateY(-50%)}.lb .nx{right:3vw;top:50%;transform:translateY(-50%)}
 
+/* ---------- investi con me ---------- */
+.invest{background:var(--paper);padding:110px 0;text-align:center;border-top:1px solid var(--line)}
+.invest .eyebrow{justify-content:center}
+.invest .eyebrow::after{content:"";width:40px;height:1px;background:currentColor;opacity:.6}
+.invest h2{font-size:clamp(40px,4.6vw,76px);margin:28px auto 28px}
+.invest h2 em{color:var(--grey-2)}
+.invest p{max-width:54ch;margin:0 auto;font-size:clamp(16px,1.2vw,19px);line-height:1.8;color:var(--grey);font-weight:300}
+.invest .actions{display:flex;justify-content:center;align-items:center;gap:40px;flex-wrap:wrap;margin-top:44px}
+.invest .link-line{padding:0 0 14px;border-bottom-color:var(--line)}
+
 /* ---------- processo ---------- */
 .process{background:var(--black);color:#fff}
 .process .eyebrow{color:#8a8a8a}
@@ -428,15 +438,15 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
   <div class="hero-bg" id="heroBg"></div>
   <div class="hero-grid"></div>
   <div class="hero-inner">
-    <div class="eyebrow fade" style="transition-delay:.2s">Flipping immobiliare · Roma</div>
+    <div class="eyebrow fade" style="transition-delay:.2s">Valorizzazione immobiliare · Roma</div>
     <h1 class="h-xl">
-      <span class="ln"><span style="transition-delay:.35s">Il tuo primo flipping,</span></span>
-      <span class="ln"><span style="transition-delay:.5s"><em>fatto bene.</em></span></span>
+      <span class="ln"><span style="transition-delay:.35s">Trasformo immobili</span></span>
+      <span class="ln"><span style="transition-delay:.5s">in <em>valore reale.</em></span></span>
     </h1>
-    <p class="fade" style="transition-delay:.8s">Vuoi investire nel mattone ma non sai da dove partire? Ti affianco in ogni fase, dalla scelta dell'immobile alla vendita, con lo stesso metodo che uso per le mie operazioni.</p>
+    <p class="fade" style="transition-delay:.8s">Individuo immobili ad alto potenziale a Roma e provincia e li riqualifico, dalla valutazione dell'opportunità alla vendita o messa a reddito.</p>
     <div class="actions fade" style="transition-delay:1s">
-      <a href="#contatti" class="btn btn-solid" data-ogg="Voglio fare un'operazione di flipping">Voglio investire</a>
-      <a href="#progetti" class="btn btn-ghost">Guarda i miei progetti</a>
+      <a href="#progetti" class="btn btn-solid">Scopri i progetti</a>
+      <a href="#contatti" class="btn btn-ghost">Parliamo del tuo immobile</a>
     </div>
   </div>
   <div class="hero-foot">ROMA E PROVINCIA</div>
@@ -448,8 +458,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
   <div class="wrap about">
     <div>
       <div class="eyebrow rv">Chi sono</div>
-      <h2 class="h-xl rv rv-d1">Prima di consigliarlo,<br><span class="soft">l'ho fatto io.</span></h2>
-      <p class="lead rv rv-d2">Ogni progetto che vedi qui l'ho comprato, ristrutturato e venduto in prima persona, con numeri reali. È lo stesso percorso che faccio insieme a chi vuole iniziare a investire: analisi, budget, cantiere e vendita, senza improvvisare.</p>
+      <h2 class="h-xl rv rv-d1">Acquisto e trasformo<br><span class="soft">immobili con un obiettivo preciso.</span></h2>
+      <p class="lead rv rv-d2">Seguo ogni operazione in prima persona: analisi del mercato, definizione del budget, coordinamento della ristrutturazione e posizionamento finale. Ogni scelta è guidata dai numeri, con un unico obiettivo: aumentare il valore dell'immobile.</p>
       <a href="#metodo" class="link-line rv rv-d3">Scopri il metodo <span>→</span></a>
       <div class="stats">
         <div class="stat rv"><b id="stProj">0</b><span>Operazioni concluse</span></div>
@@ -468,40 +478,32 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
   <div class="wrap">
     <div class="services-head">
       <div class="eyebrow rv">Cosa posso fare per te</div>
-      <h2 class="h-xl rv rv-d1">Investire nel mattone,<br><span class="soft">con qualcuno che l'ha già fatto.</span></h2>
+      <h2 class="h-xl rv rv-d1">Dall'opportunità<br><span class="soft">all'immobile valorizzato</span></h2>
     </div>
     <div class="svc-list">
       <div class="svc rv">
         <span class="n">01</span>
-        <span class="ic"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 17l6-6 4 4 8-8M14 7h6v6"/></svg></span>
-        <h3>Flipping in affiancamento</h3>
-        <p>Compri tu, ti seguo io in ogni fase.</p>
+        <span class="ic"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 20V8l8-5 8 5v12M8 20v-6h6v6"/></svg></span>
+        <h3>Valorizzazione immobiliare</h3>
+        <p>Acquisto, ristrutturazione e riposizionamento sul mercato.</p>
         <span class="arr">→</span>
-        <div class="more">Per chi vuole fare un'operazione di flipping ma non sa da dove partire: ricerca e analisi dell'immobile, piano dei costi con numeri reali, coordinamento della ristrutturazione e strategia di vendita. L'immobile è intestato a te, io ti affianco dall'inizio alla fine. Le attività di mediazione vengono svolte tramite professionisti abilitati.</div>
+        <div class="more">Analisi dell'opportunità, definizione dell'intervento e coordinamento della ristrutturazione, con un obiettivo preciso: aumentare il valore dell'immobile e riposizionarlo sul mercato.</div>
       </div>
       <div class="svc rv">
         <span class="n">02</span>
-        <span class="ic"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="11" cy="11" r="9"/><path d="M14.5 7.5l-2 5-5 2 2-5z"/></svg></span>
-        <h3>Analisi dell'operazione</h3>
-        <p>Prima di comprare, verifica i numeri.</p>
-        <span class="arr">→</span>
-        <div class="more">Hai già individuato un immobile? Analizzo prezzo, costi di acquisto, lavori, tempi e prezzo di rivendita realistico, così sai in anticipo margine, ROI e rischi dell'operazione.</div>
-      </div>
-      <div class="svc rv">
-        <span class="n">03</span>
-        <span class="ic"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 20V8l8-5 8 5v12M8 20v-6h6v6"/></svg></span>
-        <h3>Vendi il tuo immobile</h3>
-        <p>Hai un immobile da ristrutturare? Valuto l'acquisto.</p>
-        <span class="arr">→</span>
-        <div class="more">Se hai un appartamento datato o da ristrutturare a Roma e provincia, valuto l'acquisto diretto. Risposta rapida e senza impegno.</div>
-      </div>
-      <div class="svc rv">
-        <span class="n">04</span>
-        <span class="ic"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="16" height="14"/><path d="M3 9h16M8 3v4M14 3v4"/></svg></span>
+        <span class="ic"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 17l6-6 4 4 8-8M14 7h6v6"/></svg></span>
         <h3>Gestione affitti brevi</h3>
         <p>Trasforma il tuo immobile in una fonte di reddito.</p>
         <span class="arr">→</span>
         <div class="more">Gestione operativa dell'immobile, dagli annunci alle prenotazioni fino al coordinamento di check-in, pulizie e attività quotidiane su Airbnb e Booking.</div>
+      </div>
+      <div class="svc rv">
+        <span class="n">03</span>
+        <span class="ic"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="11" cy="11" r="9"/><path d="M14.5 7.5l-2 5-5 2 2-5z"/></svg></span>
+        <h3>Scouting per investitori</h3>
+        <p>Ricerca e analisi di opportunità a Roma e provincia.</p>
+        <span class="arr">→</span>
+        <div class="more">Ricerca e analisi preliminare di opportunità immobiliari sulla base di prezzo, zona, costi e potenziale di valorizzazione. Le attività di mediazione e compravendita vengono svolte attraverso professionisti abilitati.</div>
       </div>
     </div>
   </div>
@@ -518,6 +520,19 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
       <button class="btn btn-dark rv rv-d2" id="allBtn">Tutti i progetti <span>→</span></button>
     </div>
     <div class="pf-grid" id="projects"></div>
+  </div>
+</section>
+
+<!-- ================= INVESTI CON ME ================= -->
+<section class="invest" id="investi">
+  <div class="wrap">
+    <div class="eyebrow rv">Investi con me</div>
+    <h2 class="h-xl rv rv-d1">Il tuo primo flipping,<br><em>fatto bene.</em></h2>
+    <p class="rv rv-d2">Vuoi investire nel mattone ma non sai da dove partire? Ti affianco in ogni fase, dalla scelta dell'immobile alla vendita, con lo stesso metodo che uso per le mie operazioni.</p>
+    <div class="actions rv rv-d3">
+      <a href="#contatti" class="btn btn-dark" data-ogg="Voglio fare un'operazione di flipping">Voglio investire <span>→</span></a>
+      <a href="#metodo" class="link-line">Scopri il metodo <span>→</span></a>
+    </div>
   </div>
 </section>
 
@@ -586,9 +601,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
           <select name="oggetto" required>
             <option value="" disabled selected>Seleziona un oggetto</option>
             <option>Voglio fare un'operazione di flipping</option>
-            <option>Analisi di un immobile</option>
-            <option>Vendere il mio immobile</option>
+            <option>Vendere o valorizzare il mio immobile</option>
+            <option>Ristrutturazione e valorizzazione</option>
             <option>Gestione affitti brevi</option>
+            <option>Scouting per investitori</option>
             <option>Informazioni su un progetto</option>
             <option>Altro</option>
           </select>
@@ -825,7 +841,7 @@ function openProject(i) {
       <div class="fin">${fin}</div>
     </div>
     <aside class="side">
-      <small>Vuoi fare un'operazione così?</small>
+      <small>Hai un immobile simile?</small>
       <a class="btn" href="#contatti" id="askBtn">Richiedi informazioni</a>
       <div class="nm">Gabriele Formiconi</div>
       <a class="ln" href="https://wa.me/${c.whatsapp}?text=${encodeURIComponent("Ciao Gabriele, ho visto il progetto " + p.titolo + " e vorrei maggiori informazioni.")}" target="_blank" rel="noopener">WhatsApp →</a>
