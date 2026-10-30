@@ -807,16 +807,19 @@ const CONFIG = {
       vendita: 210000,
       stanze: {
         // [prima, dopo] — lascia "" se una foto non c'è ancora
-        "Soggiorno":       ["img/botticelli/soggiorno-prima.jpg", ""],
-        "Cucina":          ["img/botticelli/cucina-prima.jpg",    ""],
-        "Camera da letto": ["img/botticelli/camera-prima.jpg",    ""],
-        "Bagno":           ["img/botticelli/bagno-prima.jpg",     ""],
-        "Balcone":         ["img/botticelli/balcone-prima.jpg",   ""]
+        "Soggiorno":       ["img/botticelli/soggiorno-prima.jpg", "img/botticelli/soggiorno-dopo.jpg"],
+        "Cucina":          ["img/botticelli/cucina-prima.jpg",    "img/botticelli/cucina-dopo.jpg"],
+        "Camera da letto": ["img/botticelli/camera-prima.jpg",    "img/botticelli/camera-dopo.jpg"],
+        "Bagno":           ["img/botticelli/bagno-prima.jpg",     "img/botticelli/bagno-dopo.jpg"],
+        "Balcone":         ["img/botticelli/balcone-prima.jpg",   "img/botticelli/balcone-dopo.jpg"]
       },
       // foto aggiuntive solo per la galleria
       altreFoto: {
-        "Soggiorno — prima": "img/botticelli/soggiorno-prima-2.jpg",
-        "Bagno — prima":     "img/botticelli/bagno-prima-2.jpg"
+        "Soggiorno e cucina — dopo": "img/botticelli/soggiorno-dopo-2.jpg",
+        "Zona giorno — dopo":        "img/botticelli/soggiorno-dopo-3.jpg",
+        "Bagno — dopo":              "img/botticelli/bagno-dopo-2.jpg",
+        "Soggiorno — prima":         "img/botticelli/soggiorno-prima-2.jpg",
+        "Bagno — prima":             "img/botticelli/bagno-prima-2.jpg"
       }
     }
   ],
@@ -936,8 +939,9 @@ function openProject(i) {
   // tutte le foto: prima i "dopo", poi i "prima"
   const photos = [
     ...rooms.map(r => ({ src: p.stanze[r][1], cap: r + " — dopo" })),
+    ...Object.entries(p.altreFoto || {}).filter(([c]) => /dopo/i.test(c)).map(([cap, src]) => ({ src, cap })),
     ...rooms.map(r => ({ src: p.stanze[r][0], cap: r + " — prima" })),
-    ...Object.entries(p.altreFoto || {}).map(([cap, src]) => ({ src, cap }))
+    ...Object.entries(p.altreFoto || {}).filter(([c]) => !/dopo/i.test(c)).map(([cap, src]) => ({ src, cap }))
   ].filter(f => f.src);
   const g = photos.slice(0, 5);
   const gal = g.map((f, k) => `<button data-k="${k}">${imgOrPh(f.src, f.cap)}${k === 4 ? `<span class="all">Tutte le foto (${photos.length})</span>` : ""}</button>`).join("");
