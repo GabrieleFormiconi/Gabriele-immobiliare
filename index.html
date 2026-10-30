@@ -316,22 +316,25 @@ body.lock{overflow:hidden}
 .step p{max-height:0;overflow:hidden;opacity:0;margin-top:0;color:#8f8f8f;line-height:1.8;font-weight:300;transition:max-height .8s var(--ease),opacity .6s,margin .6s}
 .step.on .no,.step.on h4{color:#fff}
 .step.on p{max-height:140px;opacity:1;margin-top:18px}
-.dial-wrap{position:sticky;top:16vh;display:grid;place-items:center;padding:20px 0}
-.dial{position:relative;width:min(460px,100%);aspect-ratio:1}
+.dial-wrap{position:sticky;top:14vh;display:grid;place-items:center;padding:20px 0}
+.dial{position:relative;width:min(460px,100%);aspect-ratio:400/440}
 .dial svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.dial .ticks line{stroke:#2c2c2c;stroke-width:1}
-.dial .ticks line.on{stroke:#fff}
-.dial .track{fill:none;stroke:#1d1d1d;stroke-width:2}
-.dial .prog{fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;transition:stroke-dashoffset 1.4s var(--ease)}
-.dial .head{fill:#fff;filter:drop-shadow(0 0 10px rgba(255,255,255,.8));transition:transform 1.4s var(--ease);transform-origin:200px 200px}
-.dial .words{animation:spin 40s linear infinite;transform-origin:200px 200px}
-.dial .words text{fill:#5a5a5a;font:500 10.5px var(--sans);letter-spacing:.42em;text-transform:uppercase}
-@keyframes spin{to{transform:rotate(360deg)}}
-.dial .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-.dial .num{height:clamp(110px,10vw,150px);overflow:hidden;font-family:var(--serif);font-size:clamp(110px,10vw,150px);line-height:1}
+.dial .grid circle{fill:#1f1f1f}
+.dial .ghost{fill:none;stroke:#2e2e2e;stroke-width:1.2;stroke-dasharray:4 7}
+.dial .ln{fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:stroke-dashoffset 1.2s var(--ease)}
+.dial .win{fill:transparent;stroke:#fff;stroke-width:2;transition:fill 1s var(--ease) .6s,stroke-dashoffset 1.2s var(--ease)}
+.dial.done .win{fill:#b08d57;stroke:#b08d57}
+.dial .glow{fill:#b08d57;opacity:0;transition:opacity 1.4s var(--ease) .4s}
+.dial.done .glow{opacity:.07}
+.dial .dim line,.dial .dim path{stroke:#444;stroke-width:1;fill:none}
+.dial .dim text{fill:#666;font:500 9px var(--sans);letter-spacing:.38em}
+.dial .pen{fill:#fff;filter:drop-shadow(0 0 8px rgba(255,255,255,.9));transition:transform 1.2s var(--ease)}
+.dial.done .pen{fill:#b08d57;filter:drop-shadow(0 0 10px rgba(176,141,87,.9))}
+.dial .center{position:absolute;left:50%;top:65%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;text-align:center}
+.dial .num{height:1.25em;overflow:hidden;font-family:var(--serif);font-size:clamp(84px,7.4vw,112px);line-height:1.25}
 .dial .num span{display:block;color:transparent;-webkit-text-stroke:1px #fff;transition:transform .9s var(--ease)}
-.dial .lbl{margin-top:18px;font-size:12px;letter-spacing:.38em;text-transform:uppercase;color:#bdbdbd;transition:opacity .4s}
-.dial .of{margin-top:10px;font-family:var(--serif);font-style:italic;color:#555;font-size:15px}
+.dial .lbl{margin-top:14px;font-size:11px;letter-spacing:.38em;text-transform:uppercase;color:#bdbdbd;transition:opacity .4s}
+.dial .of{margin-top:8px;font-family:var(--serif);font-style:italic;color:#555;font-size:14px}
 /* ---------- quote ---------- */
 .quote{text-align:center}
 .quote blockquote{font-family:var(--serif);font-size:clamp(28px,3vw,48px);line-height:1.55;max-width:26ch;margin:0 auto}
@@ -570,14 +573,28 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
         <div class="step" data-i="3"><span class="no">04</span><div><h4>Valorizzazione</h4><p>Posizionamento sul mercato, vendita o gestione a reddito dell'immobile finito.</p></div></div>
       </div>
       <div class="dial-wrap">
-        <div class="dial">
-          <svg viewBox="0 0 400 400">
-            <defs><path id="circ" d="M200,200 m-128,0 a128,128 0 1,1 256,0 a128,128 0 1,1 -256,0"/></defs>
-            <g class="ticks" id="ticks"></g>
-            <circle class="track" cx="200" cy="200" r="168"/>
-            <circle class="prog" id="prog" cx="200" cy="200" r="168" transform="rotate(-90 200 200)"/>
-            <g class="head" id="head"><circle cx="200" cy="32" r="6"/></g>
-            <g class="words"><text><textPath href="#circ">Analisi · Strategia · Esecuzione · Valorizzazione ·</textPath></text></g>
+        <div class="dial" id="dial">
+          <svg viewBox="0 0 400 440">
+            <g class="grid" id="dgrid"></g>
+            <!-- progetto tratteggiato -->
+            <path class="ghost" d="M50 390H350M50 390V215M350 390V215M34 228L200 82L366 228M282 154V112H312V180"/>
+            <circle class="ghost" cx="200" cy="168" r="15"/>
+            <path class="glow" d="M50 390V215L200 92L350 215V390Z"/>
+            <!-- fasi: 1 fondamenta · 2 muri · 3 tetto · 4 finestra + camino -->
+            <path class="ln" data-ph="0" d="M50 390H350"/>
+            <path class="ln" data-ph="1" d="M50 390V215"/>
+            <path class="ln" data-ph="1" d="M350 390V215"/>
+            <path class="ln" data-ph="2" d="M34 228L200 82L366 228"/>
+            <path class="ln" data-ph="3" d="M282 154V112H312V180"/>
+            <circle class="win ln" data-ph="3" cx="200" cy="168" r="15"/>
+            <!-- quote da architetto -->
+            <g class="dim">
+              <line x1="50" y1="418" x2="350" y2="418"/><path d="M50 412v12M350 412v12"/>
+              <text x="200" y="436" text-anchor="middle">4 FASI · 1 METODO</text>
+              <line x1="16" y1="215" x2="16" y2="390"/><path d="M10 215h12M10 390h12"/>
+              <text transform="translate(8 302) rotate(-90)" text-anchor="middle">ROMA</text>
+            </g>
+            <circle class="pen" id="pen" cx="0" cy="0" r="5"/>
           </svg>
           <div class="center">
             <div class="num"><span id="numStrip">01<br>02<br>03<br>04</span></div>
@@ -977,18 +994,17 @@ $$(".rv,.mask,.clip,.stat b").forEach(el => io.observe(el));
 
 /* processo: step attivo allo scroll + orbita */
 const steps = $$(".step");
-const C = 2 * Math.PI * 168, prog = $("#prog");
-prog.style.strokeDasharray = C;
-const tk = $("#ticks");
-for (let k = 0; k < 72; k++) { const a = k / 72 * Math.PI * 2 - Math.PI / 2, r1 = 184, r2 = k % 18 === 0 ? 198 : 190;
-  tk.insertAdjacentHTML("beforeend", `<line x1="${200 + r1 * Math.cos(a)}" y1="${200 + r1 * Math.sin(a)}" x2="${200 + r2 * Math.cos(a)}" y2="${200 + r2 * Math.sin(a)}"/>`); }
-const ticks = $$("line", tk), names = ["Analisi", "Strategia", "Esecuzione", "Valorizzazione"];
+const names = ["Analisi", "Strategia", "Esecuzione", "Valorizzazione"];
+const dial = $("#dial"), lines = $$("#dial .ln"), pen = $("#pen");
+// griglia a puntini tipo carta millimetrata
+const dg = $("#dgrid"); for (let x = 30; x <= 370; x += 20) for (let y = 60; y <= 400; y += 20) dg.insertAdjacentHTML("beforeend", `<circle cx="${x}" cy="${y}" r="1"/>`);
+lines.forEach(l => { const L = l.getTotalLength ? l.getTotalLength() : 600; l.style.strokeDasharray = L; l.style.strokeDashoffset = L; l.dataset.len = L; });
+const penAt = [[350, 390], [350, 215], [366, 228], [200, 168]];
 function activate(i) {
   steps.forEach((s, k) => s.classList.toggle("on", k === i));
-  const f = (i + 1) / 4;
-  prog.style.strokeDashoffset = C * (1 - f);
-  $("#head").style.transform = `rotate(${f * 360}deg)`;
-  ticks.forEach((t, k) => t.classList.toggle("on", k < Math.round(f * 72)));
+  lines.forEach(l => { l.style.strokeDashoffset = +l.dataset.ph <= i ? 0 : l.dataset.len; });
+  pen.style.transform = `translate(${penAt[i][0]}px,${penAt[i][1]}px)`;
+  dial.classList.toggle("done", i === 3);
   const n = $(".dial .num"); $("#numStrip").style.transform = `translateY(-${i * n.clientHeight}px)`;
   const l = $("#dialLbl"); l.style.opacity = 0; setTimeout(() => { l.textContent = names[i]; l.style.opacity = 1; }, 300);
 }
