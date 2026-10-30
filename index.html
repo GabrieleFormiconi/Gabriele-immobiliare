@@ -756,6 +756,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
    scrivi qui i nomi esatti dei file.
    ========================================================= */
 const CONFIG = {
+  // cambia questo numero quando sostituisci una foto con lo stesso nome (forza il browser a ricaricarla)
+  versioneFoto: "2",
   // Video di Roma in apertura (Pexels, gratuito). Se vuoi usare il tuo: "img/roma.mp4"
   heroVideo: "https://videos.pexels.com/video-files/29947195/12852219_2560_1440_30fps.mp4",
   heroImage: "https://images.pexels.com/videos/29947195/central-rome-citta-del-vaticano-classic-italy-daybreak-29947195.jpeg?auto=compress&w=1920",  // mostrata mentre il video carica
@@ -914,7 +916,8 @@ Object.assign($("#stRoi").dataset, { count: withDays.length ? Math.round(withDay
 
 /* progetti: card */
 const coverOf = p => p.copertina || Object.values(p.stanze).map(x => x[1]).find(Boolean) || Object.values(p.stanze).map(x => x[0]).find(Boolean) || "";
-const imgOrPh = (src, label, alt) => !src ? `<div class="ph-img">${label ? label + " — foto in arrivo" : ""}</div>` : `<img src="${src}" alt="${alt || label}" loading="lazy" onerror="this.outerHTML='<div class=ph-img>${label ? label + " — foto da aggiungere" : ""}</div>'">`;
+const vsrc = src => (src && !/^https?:/.test(src) && CONFIG.versioneFoto) ? src + (src.includes("?") ? "&" : "?") + "v=" + CONFIG.versioneFoto : src;
+const imgOrPh = (src, label, alt) => !src ? `<div class="ph-img">${label ? label + " — foto in arrivo" : ""}</div>` : `<img src="${vsrc(src)}" alt="${alt || label}" loading="lazy" onerror="this.outerHTML='<div class=ph-img>${label ? label + " — foto da aggiungere" : ""}</div>'">`;
 let cards = P.map((p, i) => `
   <button class="card rv ${i > 2 ? 'extra' : ''} ${['', 'rv-d1', 'rv-d2'][i % 3]}" data-i="${i}">
     <div class="cover">${imgOrPh(coverOf(p), "", p.titolo + ", " + p.zona + " – progetto di valorizzazione immobiliare")}</div>
@@ -1016,7 +1019,7 @@ function openProject(i) {
 
 /* lightbox */
 let lbList = [], lbI = 0;
-function showLb() { const f = lbList[lbI]; $("#lbImg").src = f.src; $("#lbCap").textContent = `${f.cap}  ·  ${lbI + 1} / ${lbList.length}`; }
+function showLb() { const f = lbList[lbI]; $("#lbImg").src = vsrc(f.src); $("#lbCap").textContent = `${f.cap}  ·  ${lbI + 1} / ${lbList.length}`; }
 function openLb(list, k) { lbList = list; lbI = k; showLb(); $("#lb").classList.add("open"); }
 function closeLb() { $("#lb").classList.remove("open"); }
 $("#lbX").onclick = closeLb;
