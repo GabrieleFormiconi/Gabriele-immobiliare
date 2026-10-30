@@ -695,7 +695,7 @@ const CONFIG = {
       zona: "Fiumicino (RM)",
       categoria: "Residenziale",
       anno: "2026",                 // anno di vendita: correggi se serve
-      copertina: "img/botticelli/soggiorno-dopo.jpg",
+      copertina: "",   // vuoto = usa la prima foto "dopo" disponibile (o la prima "prima")
       stato: "Venduto",
       mq: 63,
       giorni: 30,
@@ -705,10 +705,17 @@ const CONFIG = {
       costi: 10300,
       vendita: 210000,
       stanze: {
-        "Soggiorno":       ["img/botticelli/soggiorno-prima.jpg", "img/botticelli/soggiorno-dopo.jpg"],
-        "Camera da letto": ["img/botticelli/camera-prima.jpg",    "img/botticelli/camera-dopo.jpg"],
-        "Bagno":           ["img/botticelli/bagno-prima.jpg",     "img/botticelli/bagno-dopo.jpg"],
-        "Cucina":          ["img/botticelli/cucina-prima.jpg",    "img/botticelli/cucina-dopo.jpg"]
+        // [prima, dopo] — lascia "" se una foto non c'è ancora
+        "Soggiorno":       ["img/botticelli/soggiorno-prima.jpg", ""],
+        "Cucina":          ["img/botticelli/cucina-prima.jpg",    ""],
+        "Camera da letto": ["img/botticelli/camera-prima.jpg",    ""],
+        "Bagno":           ["img/botticelli/bagno-prima.jpg",     ""],
+        "Balcone":         ["img/botticelli/balcone-prima.jpg",   ""]
+      },
+      // foto aggiuntive solo per la galleria
+      altreFoto: {
+        "Soggiorno — prima": "img/botticelli/soggiorno-prima-2.jpg",
+        "Bagno — prima":     "img/botticelli/bagno-prima-2.jpg"
       }
     }
   ],
@@ -800,10 +807,11 @@ Object.assign($("#stBuy").dataset, { count: totAcq ? Math.round((totVen / totAcq
 Object.assign($("#stRoi").dataset, { count: withDays.length ? Math.round(withDays.reduce((s, p) => s + p.giorni, 0) / withDays.length) : 0, suffix: " giorni" });
 
 /* progetti: card */
-const imgOrPh = (src, label) => `<img src="${src}" alt="${label}" onerror="this.outerHTML='<div class=ph-img>${label ? label + " — foto da aggiungere" : ""}</div>'">`;
+const coverOf = p => p.copertina || Object.values(p.stanze).map(x => x[1]).find(Boolean) || Object.values(p.stanze).map(x => x[0]).find(Boolean) || "";
+const imgOrPh = (src, label) => !src ? `<div class="ph-img">${label ? label + " — foto in arrivo" : ""}</div>` : `<img src="${src}" alt="${label}" onerror="this.outerHTML='<div class=ph-img>${label ? label + " — foto da aggiungere" : ""}</div>'">`;
 let cards = P.map((p, i) => `
   <button class="card rv ${i > 2 ? 'extra' : ''} ${['', 'rv-d1', 'rv-d2'][i % 3]}" data-i="${i}">
-    <div class="cover">${imgOrPh(p.copertina, "")}</div>
+    <div class="cover">${imgOrPh(coverOf(p), "")}</div>
     <span class="go">↗</span>
     <div class="txt">
       <div class="cat">${p.categoria}${p.anno ? `<i></i>${p.anno}` : ""}</div>
@@ -825,8 +833,9 @@ function openProject(i) {
   // tutte le foto: prima i "dopo", poi i "prima"
   const photos = [
     ...rooms.map(r => ({ src: p.stanze[r][1], cap: r + " — dopo" })),
-    ...rooms.map(r => ({ src: p.stanze[r][0], cap: r + " — prima" }))
-  ];
+    ...rooms.map(r => ({ src: p.stanze[r][0], cap: r + " — prima" })),
+    ...Object.entries(p.altreFoto || {}).map(([cap, src]) => ({ src, cap }))
+  ].filter(f => f.src);
   const g = photos.slice(0, 5);
   const gal = g.map((f, k) => `<button data-k="${k}">${imgOrPh(f.src, f.cap)}${k === 4 ? `<span class="all">Tutte le foto (${photos.length})</span>` : ""}</button>`).join("");
 
