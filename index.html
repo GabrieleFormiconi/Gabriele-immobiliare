@@ -812,13 +812,13 @@ const CONFIG = {
         "Soggiorno":       ["img/botticelli/soggiorno-prima.jpg", "img/botticelli/soggiorno-dopo.jpg"],
         "Cucina":          ["img/botticelli/cucina-prima.jpg",    "img/botticelli/cucina-dopo.jpg"],
         "Camera da letto": ["img/botticelli/camera-prima.jpg",    "img/botticelli/camera-dopo.jpg"],
-        "Bagno":           ["img/botticelli/bagno-prima-2.jpg",   "img/botticelli/bagno-dopo.jpg"],
+        "Bagno":           ["img/botticelli/bagno-prima.jpg",     "img/botticelli/bagno-dopo.jpg"],
         "Balcone":         ["img/botticelli/balcone-prima.jpg",   "img/botticelli/balcone-dopo.jpg"]
       },
       // foto aggiuntive solo per la galleria
       altreFoto: {
         "Soggiorno — prima":         "img/botticelli/soggiorno-prima-2.jpg",
-        "Bagno — prima":             "img/botticelli/bagno-prima.jpg"
+        "Bagno — prima":             "img/botticelli/bagno-prima-2.jpg"
       }
     }
   ],
@@ -938,10 +938,11 @@ function openProject(i) {
   const p = P[i], rooms = Object.keys(p.stanze);
   // tutte le foto: prima i "dopo", poi i "prima"
   const photos = [
-    ...rooms.map(r => ({ src: p.stanze[r][1], cap: r + " — dopo" })),
-    ...Object.entries(p.altreFoto || {}).filter(([c]) => /dopo/i.test(c)).map(([cap, src]) => ({ src, cap })),
-    ...rooms.map(r => ({ src: p.stanze[r][0], cap: r + " — prima" })),
-    ...Object.entries(p.altreFoto || {}).filter(([c]) => !/dopo/i.test(c)).map(([cap, src]) => ({ src, cap }))
+    ...rooms.flatMap(r => [{ src: p.stanze[r][1], cap: r + " — dopo" },
+      ...Object.entries(p.altreFoto || {}).filter(([c]) => /dopo/i.test(c) && c.startsWith(r)).map(([cap, src]) => ({ src, cap }))]),
+    ...rooms.flatMap(r => [{ src: p.stanze[r][0], cap: r + " — prima" },
+      ...Object.entries(p.altreFoto || {}).filter(([c]) => !/dopo/i.test(c) && c.startsWith(r)).map(([cap, src]) => ({ src, cap }))]),
+    ...Object.entries(p.altreFoto || {}).filter(([c]) => !rooms.some(r => c.startsWith(r))).map(([cap, src]) => ({ src, cap }))
   ].filter(f => f.src);
   const g = photos.slice(0, 5);
   const gal = g.map((f, k) => `<button data-k="${k}">${imgOrPh(f.src, f.cap)}${k === 4 ? `<span class="all">Tutte le foto (${photos.length})</span>` : ""}</button>`).join("");
