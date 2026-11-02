@@ -492,8 +492,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
   .dial .lbl{font-size:9.5px;margin-top:6px}
   .dial .of{display:none}
   .dial .dim{display:none}
-  .step{min-height:42vh;align-content:start;padding:36px 0}
-  .step:last-child{min-height:55vh}
+  .step{padding:30px 0}
+  .step.on p{margin-top:12px}
   .gal{grid-template-columns:1fr 1fr;grid-template-rows:auto;height:auto}
   .gal button{aspect-ratio:4/3}.gal button:first-child{grid-row:auto;grid-column:1/3}
   .specs{grid-template-columns:1fr 1fr}.specs div{border-left:0;padding-left:0;border-top:1px solid var(--line)}
@@ -1111,7 +1111,7 @@ function activate(i) {
 let cur = 0;
 const so = new IntersectionObserver(es => es.forEach(e => {
   if (e.isIntersecting) { const i = +e.target.dataset.i; if (i !== cur) { cur = i; activate(i); } }
-}), { rootMargin: "-45% 0px -45% 0px" });
+}), { rootMargin: matchMedia("(max-width:1000px)").matches ? "-58% 0px -36% 0px" : "-45% 0px -45% 0px" });
 steps.forEach(s => { so.observe(s); s.onclick = () => { cur = +s.dataset.i; activate(cur); }; });
 activate(0);
 
