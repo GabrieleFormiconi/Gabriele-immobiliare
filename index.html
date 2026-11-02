@@ -1061,7 +1061,7 @@ setTimeout(() => { $("#loader").classList.add("done"); document.body.classList.a
 /* header */
 let lastY = 0;
 const hdr = $("#hdr");
-const hideOnScroll = matchMedia("(min-width:1001px)").matches; // su telefono l'header resta sempre fisso
+const hideOnScroll = false; // header sempre fisso, su telefono e computer
 function onHeader(y) {
   hdr.classList.toggle("solid", y > innerHeight * .8);
   if (!hideOnScroll) { lastY = y; return; }
